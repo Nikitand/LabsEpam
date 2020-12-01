@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import java.util.List;
 
 public class WebdriverTestTest {
     WebDriver driver;
@@ -44,6 +45,9 @@ public class WebdriverTestTest {
         cityCheckbox.click();
         WebElement moskowcityCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='content-container']//section//div[2]//form/div[7]/div/div[1]/div[2]")));
         moskowcityCheckbox.click();
+
+        List<WebElement> searchResult = driver.findElements(By.id("search-result-items"));
+        Assert.assertTrue("search result are empty!", searchResult.size()>0);
 
     }
     @AfterTest(alwaysRun = true)
