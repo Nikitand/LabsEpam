@@ -27,6 +27,7 @@ public class LacostaTest {
        int searchResult = new LacostaHomePage(driver)
                .openPage()
                .searchForTerms("КУРТКА")
+               .addParametrs()
                .countNumberOfSearchResult();
 
                 Assert.assertTrue("search result are empty", searchResult>0);
@@ -46,6 +47,7 @@ public class LacostaTest {
         cityCheckbox.click();
         WebElement moskowcityCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='content-container']//section//div[2]//form/div[7]/div/div[1]/div[2]")));
         moskowcityCheckbox.click();
+
 
     }
 
