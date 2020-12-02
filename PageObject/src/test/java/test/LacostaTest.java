@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import page.AvailabilityInTheStorePage;
 import page.LacostaHomePage;
 
 import java.io.File;
@@ -36,6 +37,17 @@ public class LacostaTest {
                .countNumberOfSearchResult();
 
                 Assert.assertTrue("search result are empty", searchResult>0);
+
+    }
+    @Test
+    public  void checkAvailabilityInStore()
+    {
+        Boolean  checkAvailability = new AvailabilityInTheStorePage(driver)
+                .openPage()
+                .addParametrs()
+                .openPageCheckOnStoreFunction()
+                .checkOnStore();
+        Assert.assertFalse("Not available in this store", checkAvailability);
 
     }
 

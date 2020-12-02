@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LacostaHomePage {
     private static final String HOMEPAGE_URL = "https://lacoste.ru/";
+
     private WebDriver  driver;
 
     @FindBy(xpath = "//*[@id='search-render']/form/input[1]")
@@ -25,6 +26,7 @@ public class LacostaHomePage {
         driver.manage().window().maximize();
         return this;
     }
+
      public SearchResultsWithParameter searchForTerms(String term)
      {
          searchInput.sendKeys(term);
