@@ -1,6 +1,5 @@
-package package_model;
+package page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,11 +25,11 @@ public class LacostaHomePage {
         driver.manage().window().maximize();
         return this;
     }
-     public searchResultsWithParameter searchForTerms(String term)
+     public SearchResultsWithParameter searchForTerms(String term)
      {
          searchInput.sendKeys(term);
          searchInput.sendKeys(Keys.ENTER);
-         return new searchResultsWithParameter(driver,term);
+         return new SearchResultsWithParameter(driver,term);
      }
 
 }
