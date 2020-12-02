@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 public class LacostaHomePage {
     private static final String HOMEPAGE_URL = "https://lacoste.ru/";
     private WebDriver  driver;
-    private WebElement keyPress;
 
     @FindBy(xpath = "//*[@id='search-render']/form/input[1]")
     private WebElement searchInput;

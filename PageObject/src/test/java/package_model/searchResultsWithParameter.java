@@ -16,13 +16,14 @@ public class searchResultsWithParameter {
 
     @FindBy(className = "search-result-items")
     private List<WebElement> generalSearchResult;
+
     @FindBy(xpath = "//*[@id='content-container']//div[1]/div[2]//form/div[1]//button")
     private WebElement genderCheckbox;
 
     @FindBy(xpath = "//*[@id='content-container']//div[2]//div[2]//div[3]")
     private WebElement menCheckbox ;
 
-    @FindBy(xpath = "///*[@id='content-container']//div/div/div/div/div/div[2]/section/div/div/div[1]/div[2]/div/div/form/div[2]/div/button")
+    @FindBy(xpath = "//*[@id='content-container']//div/div/div/div/div/div[2]/section/div/div/div[1]/div[2]/div/div/form/div[2]/div/button")
     private WebElement sessionCheckbox ;
 
     @FindBy(xpath = "//*[@id='content-container']//div[2]//form/div[2]//div[2]")
@@ -43,7 +44,6 @@ public class searchResultsWithParameter {
 
     public searchResultsWithParameter(WebDriver driver, String searchTerm)
     {
-
         this.searchTerm = searchTerm;
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -54,15 +54,15 @@ public class searchResultsWithParameter {
     }
 
     public searchResultsWithParameter addParametrs() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        genderCheckbox.click();
-        menCheckbox.click();
-        sessionCheckbox.click();
-        winterCheckBox.click();
-        sizeCheckbox.click();
-        oneSizeCheckbox.click();
-        cityCheckbox.click();
-        moskowcityCheckbox.click();
+        waitForElementToBeClickable(this.driver, By.className("filter-left"));
+        this.genderCheckbox.click();
+        this.menCheckbox.click();
+        this.sessionCheckbox.click();
+        this.winterCheckBox.click();
+        this.sizeCheckbox.click();
+        this.oneSizeCheckbox.click();
+        this.cityCheckbox.click();
+        this.moskowcityCheckbox.click();
         return new searchResultsWithParameter();
     }
     public int countGeneralNumberOfSearchResults()
