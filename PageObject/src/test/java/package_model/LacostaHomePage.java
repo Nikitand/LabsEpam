@@ -24,6 +24,7 @@ public class LacostaHomePage {
     public  LacostaHomePage openPage()
     {
         driver.get(HOMEPAGE_URL);
+        driver.manage().window().maximize();
         return this;
     }
      public searchResultsWithParameter searchForTerms(String term)
