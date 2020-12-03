@@ -1,15 +1,15 @@
-package page;
+package pageobject.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageobject.Page;
 
-public class AvailabilityInTheStorePage {
+public class AvailabilityInTheStorePage extends Page {
     private WebDriver driver;
-    static int WAIT_TIMEOUT_SECOND = 15;
+    static int WAIT_TIMEOUT_SECOND = 25;
     private  static final String PRODUCT_URL  = "https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/";
 
     private final By sizeProductLocator = By.xpath("//*[@id=\"js-sizes\"]/div[2]/a[1]");
@@ -31,12 +31,13 @@ public class AvailabilityInTheStorePage {
 
     public AvailabilityInTheStorePage(WebDriver driver)
     {
-        this.driver = driver;
-        PageFactory.initElements(driver,this);
+        super(driver);
     }
     public  AvailabilityInTheStorePage openPage()
     {
         driver.get(PRODUCT_URL);
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(PageLoaded());
         driver.manage().window().maximize();
         return  this;
     }
