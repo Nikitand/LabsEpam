@@ -3,59 +3,56 @@ package test;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import page.AvailabilityInTheStorePage;
-import page.LacostaHomePage;
-
-import java.io.File;
-import java.io.IOException;
+import page.FutbolkaPage;
+import page.BasketPage;
+import page.MenShirtPage;
 
 public class LacostaTest {
+
     WebDriver driver;
-    WebDriverWait wait;
-    private static ChromeDriverService service;
+    private final  static  int size = 48;
+    private  String shirtName = "\n" +
+            "        Рубашка Lacoste\n" +
+            "      ";
+
     @BeforeTest
-    void Start() throws IOException {
+    void browserStart() {
         driver = new ChromeDriver();
-        service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(new File("C:\\driver\\chromedriver.exe"))
-                .usingAnyFreePort()
-                .build();
-        service.start();
+        driver.manage().window().maximize();
     }
+
     @Test
-    public void searchWithParametrs()
-    {
-       int searchResult = new LacostaHomePage(driver)
+    public void workWithBasket()    {
+       BasketPage checkBasket = new MenShirtPage(driver,"https://lacoste.ru/catalog/count_down_muzhchiny/rubashka_lacoste_regular_fit_303_color_800/")
                .openPage()
-               .searchForTerms("КУРТКА")
-               .addParametrs()
-               .countNumberOfSearchResult();
-
-                Assert.assertTrue("search result are empty", searchResult>0);
-
+               .selectSize()
+               .addToBasket()
+               .openBasket();
+        Assert.assertTrue(checkBasket.checkSizeShirt().contains("size"));
+        Assert.assertTrue(checkBasket.checkNameShirt().contains("shirtName"));
     }
+
     @Test
-    public  void checkAvailabilityInStore()
-    {
-        Boolean  checkAvailability = new AvailabilityInTheStorePage(driver)
+    public  void checkAvailabilityInStore()    {
+        Boolean  checkAvailability = new FutbolkaPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
                 .openPage()
-                .addParametrs()
+                .addSize()
                 .openPageCheckOnStoreFunction()
                 .checkOnStore();
-        Assert.assertFalse("Not available in this store", checkAvailability);
-
+        Assert.assertFalse("Not available in this store",checkAvailability);
     }
 
+    @AfterMethod(alwaysRun = true)
+    public void browserTearDown() {
+        driver.manage().deleteAllCookies();
+    }
 
-    @AfterTest(alwaysRun = true)
-    void Finish()
-    {
+    @AfterTest
+    public void quiteBrowserAfterTest() {
         driver.quit();
-        service.stop();
     }
 }

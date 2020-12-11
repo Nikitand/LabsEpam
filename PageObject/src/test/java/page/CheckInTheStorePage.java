@@ -1,61 +1,47 @@
-package pageobject.page;
+package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pageobject.Page;
 
-public class AvailabilityInTheStorePage extends Page {
+public class CheckInTheStorePage {
+
     private WebDriver driver;
     static int WAIT_TIMEOUT_SECOND = 25;
-    private  static final String PRODUCT_URL  = "https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/";
 
-    private final By sizeProductLocator = By.xpath("//*[@id=\"js-sizes\"]/div[2]/a[1]");
-
-    private final By checkFunctionLocator = By.xpath("//*[@id=\"js-sku-product\"]/div/section[1]/div/div/div[4]/div/div[4]/div[2]/a/button/span");
 
     private final By choiceCityLocator = By.name("city");
-
     private final By moscowCityLocator = By.xpath("//*[@id=\"vee-city\"]/option[2]");
-
     private final By sizeLocator = By.xpath("//*[@id=\"stepshipping\"]/div[1]//div[2]/div/div/a[1]");
-
     private final By choiceStoreLocator = By.name("store");
-
     private final By storeVegasLocator   = By.xpath("//*[@id=\"vee-store\"]/option[6]");
-
     private final By addressStoreLocator   = By.xpath("//*[@id=\"checkout-shipping-form\"]/div/p[1]/span");
+    private final By cookiesLocator = By.id("cookie-policy");
 
-
-    public AvailabilityInTheStorePage(WebDriver driver)
+    public CheckInTheStorePage(WebDriver driver)
     {
-        super(driver);
-    }
-    public  AvailabilityInTheStorePage openPage()
-    {
-        driver.get(PRODUCT_URL);
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(PageLoaded());
-        driver.manage().window().maximize();
-        return  this;
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    public  AvailabilityInTheStorePage addParametrs()
+    public CheckInTheStorePage addParametrs()
     {
+        clickButtonByXpath(cookiesLocator);
         WebElement choiceSize = new WebDriverWait(driver, WAIT_TIMEOUT_SECOND)
                 .until(ExpectedConditions.presenceOfElementLocated(sizeProductLocator));
         choiceSize.click();
         return this;
     }
 
-    public  AvailabilityInTheStorePage openPageCheckOnStoreFunction()
+    public CheckInTheStorePage openPageCheckOnStoreFunction()
     {
         WebElement openCheckFunction = new WebDriverWait(driver, WAIT_TIMEOUT_SECOND)
                 .until(ExpectedConditions.presenceOfElementLocated(checkFunctionLocator));
         openCheckFunction.click();
-        return new AvailabilityInTheStorePage(driver);
+        return new CheckInTheStorePage(driver);
     }
 
     public Boolean checkOnStore()
@@ -80,6 +66,10 @@ public class AvailabilityInTheStorePage extends Page {
 
         return !(addressStore.isDisplayed());
     }
-
+    private void clickButtonByXpath(By by) {
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECOND)
+                .until(ExpectedConditions.presenceOfElementLocated(by))
+                .click();
+    }
 
 }
