@@ -11,8 +11,8 @@ public class FutbolkaPage {
     private final  static  int  TIME_OUT_SECONDS =  15  ;
     private WebDriver driver;
     private  String url;
-    private final By sizeProductLocator = By.xpath("//*[@id=\"js-sizes\"]/div[2]/a[1]");
-    private final By checkFunctionLocator = By.xpath("//*[@id=\"js-sku-product\"]/div/section[1]/div/div/div[4]/div/div[4]/div[2]/a/button/span");
+    private final By sizeProductLocator = By.xpath("//a[@class = \"sizes-list__item\" and  contains(text(), '46')]");
+    private final By checkFunctionLocator = By.xpath("//span[@class = \"w2s-available-label\"]");
     private final By cookiesLocator = By.id("cookie-policy");
 
     public FutbolkaPage(WebDriver driver, String FutbolkaUrl) {
@@ -32,15 +32,15 @@ public class FutbolkaPage {
         return this;
     }
 
+    public CheckInTheStorePage openPageCheckOnStoreFunction()
+    {
+        clickButtonByXpath(checkFunctionLocator);
+        return new CheckInTheStorePage(driver);
+    }
+
     private void clickButtonByXpath(By by) {
         new WebDriverWait(driver, TIME_OUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(by))
                 .click();
-    }
-
-    public CheckInTheStorePage openPageCheckOnStoreFunction()
-    {
-        clickButtonByXpath()
-        return new CheckInTheStorePage(driver);
     }
 }
