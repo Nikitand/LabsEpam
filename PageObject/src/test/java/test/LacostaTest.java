@@ -3,21 +3,18 @@ package test;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import page.FutbolkaPage;
+import page.TShirtPage;
 import page.BasketPage;
 import page.MenShirtPage;
 
 public class LacostaTest {
 
-    WebDriver driver;
-    private final  static  int size = 48;
-    private  String shirtName = "\n" +
-            "        Рубашка Lacoste\n" +
-            "      ";
+    private WebDriver driver;
+    private String size = "48";
+    private  String shirtName = "Рубашка Lacoste";
 
     @BeforeTest
     void browserStart() {
@@ -32,23 +29,18 @@ public class LacostaTest {
                .selectSize()
                .addToBasket()
                .openBasket();
-        Assert.assertTrue(checkBasket.checkSizeShirt().contains("size"));
-        Assert.assertTrue(checkBasket.checkNameShirt().contains("shirtName"));
+        Assert.assertTrue("missing size", checkBasket.checkSizeShirt().contains(size));
+       Assert.assertTrue("missing name", checkBasket.checkNameShirt().contains(shirtName));
     }
 
     @Test
     public  void checkAvailabilityInStore()    {
-        Boolean  checkAvailability = new FutbolkaPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+        Boolean  checkAvailability = new TShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
                 .openPage()
                 .addSize()
                 .openPageCheckOnStoreFunction()
                 .checkOnStore();
         Assert.assertFalse("Not available in this store",checkAvailability);
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void browserTearDown() {
-        driver.manage().deleteAllCookies();
     }
 
     @AfterTest
