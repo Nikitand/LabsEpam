@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Page {
 
     protected WebDriver driver;
+    protected   String url;
     protected final  static  int  TIME_OUT_SECONDS =  25 ;
     protected final By cookiesLocator = By.xpath("//button[@class =\"close\"]");
 

@@ -26,10 +26,8 @@ public class CheckInTheStorePage  extends Page {
         clickButtonByXpath(sizeLocator);
         clickButtonByXpath(choiceStoreLocator);
         clickButtonByXpath(storeVegasLocator);
-
         WebElement addressStore = new WebDriverWait(driver, TIME_OUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(addressStoreLocator));
-
         return !(addressStore.isDisplayed());
     }
 }
