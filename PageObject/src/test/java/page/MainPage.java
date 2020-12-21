@@ -22,7 +22,6 @@ public class MainPage extends Page {
         return this;
     }
 
-
     public  MainPage inputTerm(String term) {
         clickButtonByXpath(findBoxLocator);
         searchInput.sendKeys(term);

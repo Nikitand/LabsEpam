@@ -20,8 +20,7 @@ public class LacostaTest {
     private String failTerms  = "Хот-дог";
     private String goodTerms  = "КУРТКА";
     private String failTermsResult  = "По запросу 'хот-дог' ничего не найдено";
-
-
+    private String unRealPromo = "Example";
     @BeforeTest
     void browserStart() {
         driver = new ChromeDriver();
@@ -101,6 +100,16 @@ public class LacostaTest {
                 .orderingProduct();
                 //Assert
 
+    }
+
+    @Test
+    public  void enteringPromoCode(){
+BasketPage checkPromoCode = new JacketPage(driver, "https://lacoste.ru/catalog/verkhnyaya-odezhda-muzhchiny/kurtka_lacoste_national_geographic_1_color_6T9/")
+        .openPage()
+        .addToBasket()
+        .openBasket()
+        .enterUnRealPromo(unRealPromo);
+//assert
     }
 
     @AfterTest

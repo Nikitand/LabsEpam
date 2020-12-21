@@ -13,6 +13,7 @@ public class SeacrhPage extends Page {
     public SeacrhPage(WebDriver driver) {
         super(driver);
     }
+
     private final String checkResult="//div [@class= \"search-plug__inner\"]/ h2";
     private final String genderLocator="//button[contains(text(),'Пол')]";
     private final String menGenderLocator="//label[contains(text(),'Муж')]";

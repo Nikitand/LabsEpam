@@ -13,7 +13,9 @@ public class Page {
     protected   String url;
     protected final  static  int  TIME_OUT_SECONDS =  25 ;
     protected final By cookiesLocator = By.xpath("//button[@class =\"close\"]");
-
+    protected final By addToBasketLocator = By.xpath("//button[@class='btn btn-full btn-new l-cart-button']");
+    protected final By selectSizeLocator = By.xpath("//a[@class = \"sizes-list__item\" and contains(text(), '48')]");
+    protected final By openBasketLocator = By.id("top-minicart");
     protected Page(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

@@ -1,9 +1,11 @@
 package page;
 
 import AbstractPage.Page;
-import org.apache.tools.ant.taskdefs.condition.Or;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class BasketPage extends Page {
 
@@ -11,6 +13,10 @@ public class BasketPage extends Page {
     private final String checkName="cart-product-name";
     private final By changeCountLocator = By.xpath("//div/select/option[@value = \"1\"]");
     private final By orderButtonLocator = By.xpath("//div[@class = \"cart-validation-wrapper\"]/a");
+    private final By promoBoxLocator = By.xpath("//div[@class= \"cart-promo-code\"]/input");
+
+    @FindBy(className = "search-field")
+    private WebElement promoInput;
 
     public BasketPage(WebDriver driver) {
         super(driver);
@@ -33,6 +39,13 @@ public class BasketPage extends Page {
 
     public  BasketPage changeCount(){
         clickButtonByXpath(changeCountLocator);
+        return this;
+    }
+
+    public  BasketPage enterUnRealPromo(String promo){
+        clickButtonByXpath(promoBoxLocator);
+        promoInput.sendKeys(promo);
+        promoInput.sendKeys(Keys.ENTER);
         return this;
     }
 
