@@ -1,29 +1,30 @@
 package test;
 
+import model.Promo;
+import model.TShirt;
 import model.User;
-import org.testng.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.testng.annotations.Test;
-import page.LacostaHomePage;
-import page.LacostaLoginPage;
-import page.LacostaProfilePage;
-import page.LacostaSearchResultPage;
+import page.*;
+import service.PromoCreator;
 import service.UserCreator;
+import service.TShirtCreator;
 
 public class LacostaUserTest extends CommonConditions {
 
-
     private String failTerms  = "Хот-дог";
+    private String goodTerms  = "Куртка";
     private String failResult = "По запросу «Хот-дог» ничего не найдено";
+    private String countProduct = "3";
 
-    @Test(priority = 1)
+   @Test(priority = 1)
     public  void loginAsLoggedInUser(){
         User testUser = UserCreator.withCredentialsFromProperty();
         LacostaProfilePage checkUser =  new LacostaLoginPage(driver,"https://lacoste.ru/account/auth/")
                 .openPage()
                 .login(testUser)
                 .openProfilePage();
-
-        Assert.assertTrue(checkUser.getСheckEmail().contains(testUser.getUsername()));
+        assertThat(checkUser.getСheckEmail().contains(testUser.getUsername())).isTrue();
     }
 
     @Test(priority = 2)
@@ -33,6 +34,91 @@ public class LacostaUserTest extends CommonConditions {
                 .inputTerm(failTerms)
                 .searchTerm();
 
-        Assert.assertTrue(checkResult.getCheckResultSeacrh().contains(failResult));
+        assertThat(checkResult.getCheckResultSeacrh().contains(failResult)).isFalse();
+    }
+
+    @Test(priority = 3)
+    public void checkAvailabilityInStore(){
+        TShirt tShirt = TShirtCreator.withCredentialsFromProperty();
+        Boolean checkAvailability = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+                .openPage()
+                .closeCookies()
+                .addSize()
+                .openPageCheckOnStoreFunction()
+                .checkOnStore();
+
+        assertThat(checkAvailability).isFalse();
+    }
+
+    @Test(priority = 4)
+    public void workWithBasket()    {
+        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+                .openPage()
+                .addSize()
+                .addToBasket()
+                .openBasket()
+                .closeWindow();
+
+        //assertThat(checkBasket.getCoustInBasket()).isEqualTo("2 786 руб.");
+        assertThat(checkBasket.getNameInBasket()).isEqualTo("ФУТБОЛКА LACOSTE");
+        assertThat(checkBasket.getSizeInBasket()).isEqualTo("Размер: 46");
+    }
+
+    @Test(priority = 5)
+    public  void orderAnyProduct(){
+        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+                .openPage()
+                .addSize()
+                .addToBasket()
+                .openBasket()
+                .changeCount();
+
+        assertThat(checkBasket.getNameInBasket()).isEqualTo("ФУТБОЛКА LACOSTE");
+        assertThat(checkBasket.getСheckCount().contains(countProduct)).isTrue();
+        assertThat(checkBasket.getAllCoustInBasket()).isEqualTo("5 572 РУБ.");
+    }
+
+    @Test(priority = 6)
+    public void orderingProduct(){
+        Boolean checkOrder = new LacostaBasketPage(driver,"https://lacoste.ru/cart/")
+                .openPage()
+                .orderingProduct()
+                .checkInfoUser();
+
+        assertThat(checkOrder).isFalse();
+    }
+
+    @Test(priority = 7)
+    public  void enteringPromoCode(){
+        Promo failpromo = PromoCreator.withCredentialsFromProperty();
+        LacostaBasketPage checkPromoCode = new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
+                .openPage()
+                .enterUnRealPromo(failpromo);
+
+        //assertThat(checkPromoCode.getMessage()).isEqualTo("не найден");
+        assertThat(checkPromoCode.getBeforeCoustInBasket()).isEqualTo("8 358 РУБ.");
+        assertThat(checkPromoCode.getAllCoustInBasket()).isEqualTo("8 358 РУБ.");
+    }
+
+    @Test(priority = 8)
+    public  void deleteWithBasket(){
+        LacostaBasketPage resultBasket =  new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
+                .openPage()
+                .deleteProduct();
+
+       // assertThat(resultBasket.getCheckEmptyBasket()).isEqualTo("Ваша корзина пуста");
+        assertThat(resultBasket.getCheckCount()).isEqualTo(0);
+    }
+    //@Test(priority = 9)
+    public  void searchWithParametr(){
+        LacostaSearchWithParameter expectedSearchResult =  new LacostaHomePage(driver, "https://lacoste.ru/")
+                .openPage()
+                .inputTerm(goodTerms)
+                .searchGoodTerm()
+                .selectGenger()
+                .selectSeason()
+                .selectSize();
+
+        assertThat(expectedSearchResult.countResultsNumberWithSearchTerm()).isLessThan(1);
     }
 }

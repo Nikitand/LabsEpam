@@ -9,8 +9,6 @@ import model.*;
 
 public class LacostaLoginPage extends  AbstractPage {
 
-    //WebElement inputPasswordBox =driver.findElement(By.name("USER_PASSWORD"));
-    //WebElement inputEmailBox =driver.findElement(By.name("USER_LOGIN"));
     protected final String url;
     @FindBy(name = "USER_LOGIN")
     private WebElement inputEmailBox;

@@ -15,6 +15,4 @@ public  class LacostaProfilePage  extends AbstractPage {
     public String getСheckEmail(){
         return waitForElementLocatedBy(driver, By.xpath(checkEmail), TIME_OUT_SECONDS).getText();
     }
-
-
 }
