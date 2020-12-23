@@ -13,9 +13,7 @@ public abstract class AbstractPage{
 
     protected final By cookiesLocator = By.xpath("//button[@class =\"close\"]");
     protected final By windowLocator = By.xpath("//button[@class = \"atc-hide-button\"]");
-    protected final By addToBasketLocator = By.xpath("//button[@class='btn btn-full btn-new l-cart-button']");
-    protected final By selectSizeLocator = By.xpath("//a[@class = \"sizes-list__item\" and contains(text(), '48')]");
-    protected final By openBasketLocator = By.id("top-minicart");
+
 
     protected WebDriver driver;
     protected final  static  int  TIME_OUT_SECONDS =  35 ;

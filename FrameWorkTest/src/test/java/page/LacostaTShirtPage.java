@@ -1,6 +1,5 @@
 package page;
 
-import model.TShirt;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -9,7 +8,8 @@ public class LacostaTShirtPage extends AbstractPage {
     private final By sizeProductLocator = By.xpath("//a[@class = \"sizes-list__item\" and  contains(text(),'46')]");
     private final By checkFunctionLocator = By.xpath("//a[@class = \"w2s-available no-variant-selected\"]");
     private final By cost = By.xpath("//a[@class = \"w2s-available no-variant-selected\"]");
-    //private  final  String size = "//a[@class = \"sizes-list__item\" and  contains(text(),'size')]";
+    protected final By addToBasketLocator = By.xpath("//button[@class='btn btn-full btn-new l-cart-button']");
+    protected final By openBasketLocator = By.id("top-minicart");
 
     public LacostaTShirtPage(WebDriver driver, String TShirtUrl) {
         super(driver);

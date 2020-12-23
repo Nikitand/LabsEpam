@@ -12,11 +12,6 @@ import service.TShirtCreator;
 
 public class LacostaUserTest extends CommonConditions {
 
-    private String failTerms  = "Хот-дог";
-    private String goodTerms  = "Куртка";
-    private String failResult = "По запросу «Хот-дог» ничего не найдено";
-    private String countProduct = "3";
-
    @Test(priority = 1)
     public  void loginAsLoggedInUser(){
         User testUser = UserCreator.withCredentialsFromProperty();
@@ -24,6 +19,7 @@ public class LacostaUserTest extends CommonConditions {
                 .openPage()
                 .login(testUser)
                 .openProfilePage();
+
         assertThat(checkUser.getСheckEmail().contains(testUser.getUsername())).isTrue();
     }
 
@@ -59,7 +55,6 @@ public class LacostaUserTest extends CommonConditions {
                 .openBasket()
                 .closeWindow();
 
-        //assertThat(checkBasket.getCoustInBasket()).isEqualTo("2 786 руб.");
         assertThat(checkBasket.getNameInBasket()).isEqualTo("ФУТБОЛКА LACOSTE");
         assertThat(checkBasket.getSizeInBasket()).isEqualTo("Размер: 46");
     }
@@ -93,9 +88,10 @@ public class LacostaUserTest extends CommonConditions {
         Promo failpromo = PromoCreator.withCredentialsFromProperty();
         LacostaBasketPage checkPromoCode = new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
                 .openPage()
-                .enterUnRealPromo(failpromo);
+                .enterUnRealPromo(failpromo)
+                .openPage();
 
-        //assertThat(checkPromoCode.getMessage()).isEqualTo("не найден");
+        assertThat(checkPromoCode.getMessage()).isEqualTo("не найден");
         assertThat(checkPromoCode.getBeforeCoustInBasket()).isEqualTo("8 358 РУБ.");
         assertThat(checkPromoCode.getAllCoustInBasket()).isEqualTo("8 358 РУБ.");
     }
@@ -104,21 +100,10 @@ public class LacostaUserTest extends CommonConditions {
     public  void deleteWithBasket(){
         LacostaBasketPage resultBasket =  new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
                 .openPage()
-                .deleteProduct();
+                .deleteProduct()
+                .openPage();
 
-       // assertThat(resultBasket.getCheckEmptyBasket()).isEqualTo("Ваша корзина пуста");
+       assertThat(resultBasket.getCheckEmptyBasket()).isEqualTo("ВАША КОРЗИНА ПУСТА");
         assertThat(resultBasket.getCheckCount()).isEqualTo(0);
-    }
-    //@Test(priority = 9)
-    public  void searchWithParametr(){
-        LacostaSearchWithParameter expectedSearchResult =  new LacostaHomePage(driver, "https://lacoste.ru/")
-                .openPage()
-                .inputTerm(goodTerms)
-                .searchGoodTerm()
-                .selectGenger()
-                .selectSeason()
-                .selectSize();
-
-        assertThat(expectedSearchResult.countResultsNumberWithSearchTerm()).isLessThan(1);
     }
 }

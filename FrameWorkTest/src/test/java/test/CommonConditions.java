@@ -12,10 +12,16 @@ import utils.TestListener;
 public class CommonConditions {
     protected WebDriver driver;
 
+    public String failTerms  = "Хот-дог";
+    public String goodTerms  = "Куртка";
+    public String failResult = "По запросу «Хот-дог» ничего не найдено";
+    public String countProduct = "3";
+
     @BeforeTest()
     public void setUp() {
         driver = DriverSingleton.getDriver();
     }
+
     @AfterTest(alwaysRun = true)
     public void close(){
         DriverSingleton.deleteAllCookies();
