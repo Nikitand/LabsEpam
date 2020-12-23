@@ -15,7 +15,7 @@ public class LacostaUserTest extends CommonConditions {
    @Test(priority = 1)
     public  void loginAsLoggedInUser(){
         User testUser = UserCreator.withCredentialsFromProperty();
-        LacostaProfilePage checkUser =  new LacostaLoginPage(driver,"https://lacoste.ru/account/auth/")
+        LacostaProfilePage checkUser =  new LacostaLoginPage(driver)
                 .openPage()
                 .login(testUser)
                 .openProfilePage();
@@ -25,7 +25,7 @@ public class LacostaUserTest extends CommonConditions {
 
     @Test(priority = 2)
     public void searchWithFailedTerms(){
-        LacostaSearchResultPage checkResult  = new LacostaHomePage(driver, "https://lacoste.ru/")
+        LacostaSearchResultPage checkResult  = new LacostaHomePage(driver)
                 .openPage()
                 .inputTerm(failTerms)
                 .searchTerm();
@@ -35,8 +35,7 @@ public class LacostaUserTest extends CommonConditions {
 
     @Test(priority = 3)
     public void checkAvailabilityInStore(){
-        TShirt tShirt = TShirtCreator.withCredentialsFromProperty();
-        Boolean checkAvailability = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+        Boolean checkAvailability = new LacostaTShirtPage(driver)
                 .openPage()
                 .closeCookies()
                 .addSize()
@@ -47,35 +46,37 @@ public class LacostaUserTest extends CommonConditions {
     }
 
     @Test(priority = 4)
-    public void workWithBasket()    {
-        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+    public void workWithBasket() {
+        TShirt tShirt = TShirtCreator.withCredentialsFromProperty();
+        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver)
                 .openPage()
                 .addSize()
                 .addToBasket()
                 .openBasket()
                 .closeWindow();
 
-        assertThat(checkBasket.getNameInBasket()).isEqualTo("ФУТБОЛКА LACOSTE");
-        assertThat(checkBasket.getSizeInBasket()).isEqualTo("Размер: 46");
+        assertThat(checkBasket.getNameInBasket()).isEqualTo(tShirt.getName());
+        assertThat(checkBasket.getSizeInBasket()).isEqualTo(tShirt.getSize());
     }
 
     @Test(priority = 5)
     public  void orderAnyProduct(){
-        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver,"https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/")
+        TShirt tShirt = TShirtCreator.withCredentialsFromProperty();
+        LacostaBasketPage checkBasket = new LacostaTShirtPage(driver)
                 .openPage()
                 .addSize()
                 .addToBasket()
                 .openBasket()
                 .changeCount();
 
-        assertThat(checkBasket.getNameInBasket()).isEqualTo("ФУТБОЛКА LACOSTE");
+        assertThat(checkBasket.getNameInBasket()).isEqualTo(tShirt.getName());
         assertThat(checkBasket.getСheckCount().contains(countProduct)).isTrue();
         assertThat(checkBasket.getAllCoustInBasket()).isEqualTo("5 572 РУБ.");
     }
 
     @Test(priority = 6)
     public void orderingProduct(){
-        Boolean checkOrder = new LacostaBasketPage(driver,"https://lacoste.ru/cart/")
+        Boolean checkOrder = new LacostaBasketPage(driver)
                 .openPage()
                 .orderingProduct()
                 .checkInfoUser();
@@ -86,7 +87,7 @@ public class LacostaUserTest extends CommonConditions {
     @Test(priority = 7)
     public  void enteringPromoCode(){
         Promo failpromo = PromoCreator.withCredentialsFromProperty();
-        LacostaBasketPage checkPromoCode = new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
+        LacostaBasketPage checkPromoCode = new LacostaBasketPage(driver)
                 .openPage()
                 .enterUnRealPromo(failpromo)
                 .openPage();
@@ -98,7 +99,7 @@ public class LacostaUserTest extends CommonConditions {
 
     @Test(priority = 8)
     public  void deleteWithBasket(){
-        LacostaBasketPage resultBasket =  new LacostaBasketPage(driver, "https://lacoste.ru/cart/")
+        LacostaBasketPage resultBasket =  new LacostaBasketPage(driver)
                 .openPage()
                 .deleteProduct()
                 .openPage();

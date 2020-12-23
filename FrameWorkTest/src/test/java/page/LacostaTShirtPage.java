@@ -11,13 +11,14 @@ public class LacostaTShirtPage extends AbstractPage {
     protected final By addToBasketLocator = By.xpath("//button[@class='btn btn-full btn-new l-cart-button']");
     protected final By openBasketLocator = By.id("top-minicart");
 
-    public LacostaTShirtPage(WebDriver driver, String TShirtUrl) {
+    private final String PAGE_URL = "https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/";
+
+    public LacostaTShirtPage(WebDriver driver) {
         super(driver);
-        this.url = TShirtUrl;
     }
 
     public LacostaTShirtPage openPage() {
-        driver.get(url);
+        driver.get(PAGE_URL);
         return this;
     }
     public  LacostaTShirtPage closeCookies(){

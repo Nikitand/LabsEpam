@@ -9,7 +9,7 @@ import model.*;
 
 public class LacostaLoginPage extends  AbstractPage {
 
-    protected final String url;
+
     @FindBy(name = "USER_LOGIN")
     private WebElement inputEmailBox;
     @FindBy(name = "USER_PASSWORD")
@@ -17,13 +17,14 @@ public class LacostaLoginPage extends  AbstractPage {
 
     private final By enterButtonLocator = By.xpath("//div [@class = \"column-half\" ] / button [@class = \"btn btn-secondary btn-full\"]");
 
-    public LacostaLoginPage(WebDriver driver, String LoginPageUrl) {
+    private  final String  PAGE_URL="https://lacoste.ru/catalog/novye-postupleniya-muzhchiny/futbolka_lacoste_367_color_031/";
+
+    public LacostaLoginPage(WebDriver driver) {
         super(driver);
-        this.url = LoginPageUrl;
     }
 
     public LacostaLoginPage openPage() {
-        driver.get(url);
+        driver.get(PAGE_URL);
         return this;
     }
 

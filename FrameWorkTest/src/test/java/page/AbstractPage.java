@@ -14,10 +14,9 @@ public abstract class AbstractPage{
     protected final By cookiesLocator = By.xpath("//button[@class =\"close\"]");
     protected final By windowLocator = By.xpath("//button[@class = \"atc-hide-button\"]");
 
-
     protected WebDriver driver;
+
     protected final  static  int  TIME_OUT_SECONDS =  35 ;
-    protected String url;
 
     protected final Logger logger = LogManager.getRootLogger();
 

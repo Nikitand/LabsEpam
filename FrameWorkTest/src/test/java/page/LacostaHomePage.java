@@ -10,16 +10,17 @@ public class LacostaHomePage extends  AbstractPage{
 
     private final By findBoxLocator = By.name("q");
 
+    private final String PAGE_URL = "https://lacoste.ru/";
+
     @FindBy(name = "q")
     private WebElement searchInput;
 
-    public LacostaHomePage(WebDriver driver, String HomePageUrl) {
+    public LacostaHomePage(WebDriver driver) {
         super(driver);
-        this.url = HomePageUrl;
     }
 
     public LacostaHomePage openPage() {
-        driver.get(url);
+        driver.get(PAGE_URL);
         logger.info("Login page opened");
         return this;
     }

@@ -31,17 +31,15 @@ public class LacostaBasketPage extends AbstractPage{
     private final By promoBoxLocator = By.xpath("//div[@class= \"cart-promo-code\"]/input");
     private final By deleteProductLocator = By.xpath("//li[@class=\"cart-product-action-remove\"]");
 
+    private final String PAGE_URL = "https://lacoste.ru/cart/";
+
     public LacostaBasketPage (WebDriver driver){
         super(driver);
     }
 
-    public LacostaBasketPage (WebDriver driver, String LacostaBasketPageUrl){
-        super(driver);
-        this.url = LacostaBasketPageUrl;
-    }
 
     public LacostaBasketPage openPage() {
-        driver.get(url);
+        driver.get(PAGE_URL);
         logger.info("open basket");
         return this;
     }
