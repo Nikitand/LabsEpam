@@ -104,6 +104,6 @@ public class LacostaUserTest extends CommonConditions {
                 .openPage();
 
        assertThat(resultBasket.getCheckEmptyBasket()).isEqualTo("ВАША КОРЗИНА ПУСТА");
-        assertThat(resultBasket.getCheckCount()).isEqualTo('0');
+        assertThat(resultBasket.getCheckCount()).isEqualTo("0");
     }
 }
